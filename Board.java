@@ -23,6 +23,45 @@ public class Board {
 		blank = topLeft;
 	}
 
+	public Board(String initBoard) {
+		char[] array = initBoard.toCharArray();
+		int[] intarray = new int[array.length];
+		int blankLocation = 0;
+		for (int i = 0; i < array.length; i++) {
+			intarray[i] = Character.getNumericValue(array[i]);
+			if (intarray[i] == 0) blankLocation = i;
+		}
+		topLeft.initialize(intarray[0], null, null, topMid, midLeft);
+		topMid.initialize(intarray[1], null, topLeft, topRight, midMid);
+		topRight.initialize(intarray[2], null, topMid, null, midRight);
+		midLeft.initialize(intarray[3], topLeft, null, midMid, botLeft);
+		midMid.initialize(intarray[4], topMid, midLeft, midRight, botMid);
+		midRight.initialize(intarray[5], topRight, midMid, null, botRight);
+		botLeft.initialize(intarray[6], midLeft, null, botMid, null);
+		botMid.initialize(intarray[7], midMid, botLeft, botRight, null);
+		botRight.initialize(intarray[8], midRight, botMid, null, null);
+		switch (blankLocation) {
+			case 0: blank = topLeft;
+							break;
+			case 1: blank = topMid;
+							break;
+			case 2: blank = topRight;
+							break;
+			case 3: blank = midLeft;
+							break;
+			case 4: blank = midMid;
+							break;
+			case 5: blank = midRight;
+							break;
+			case 6: blank = botLeft;
+							break;
+			case 7: blank = botMid;
+							break;
+			case 8: blank = botRight;
+							break;
+		}
+	}
+
 	public String getFirst() {
 		return topLeft.getValue() + topMid.getValue() + topRight.getValue();
 	}
