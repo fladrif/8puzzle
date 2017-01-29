@@ -10,6 +10,7 @@ public class Board {
 	public Node botLeft = new Node();
 	public Node botMid = new Node();
 	public Node botRight = new Node();
+	private Board parent = null;
 
 	public Board() {
 		pathCost = 0;
@@ -127,5 +128,13 @@ public class Board {
 		} else {
 			return false;
 		}
+	}
+
+	public void setParent(Board board) {
+		parent = board;
+	}
+
+	public Board getParent() {
+		return parent;
 	}
 }

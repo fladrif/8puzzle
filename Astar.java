@@ -9,20 +9,24 @@ public class Astar {
 	private PriorityQueue<Board> manhattanFrontier;
 	private String goal = "012345678";
 	private int nodesExplored;
+	private Board goalState = null;
+
+	public Board getGoal() {
+		return goalState;
+	}
 
 	public int astarMisplaced(Board board) {
 		misplacedExistSet = new Hashtable<String, Integer>();
 		misplacedAlg = new MisplacedHeuristic();
 		misplacedFrontier = new PriorityQueue<Board>(20, misplacedAlg);
-		nodesExplored = 0;
+		nodesExplored = 1;
 		misplacedExistSet.put(board.getAll(), 1);
 		board.putCost(0);
 		misplacedFrontier.add(board);
-		nodesExplored++;
 		while ((misplacedFrontier.size() > 0) && (!misplacedFrontier.peek().getAll().equals(goal))) {
 			processMisplacedChildren(misplacedFrontier.poll());
 		}
-		Board goalState = misplacedFrontier.poll();
+		goalState = misplacedFrontier.poll();
 		System.out.println("End Cost: " + goalState.getCost());
 		return nodesExplored;
 	}
@@ -31,15 +35,14 @@ public class Astar {
 		manhattanExistSet = new Hashtable<String, Integer>();
 		manhattanAlg = new ManhattanHeuristic();
 		manhattanFrontier = new PriorityQueue<Board>(20, manhattanAlg);
-		nodesExplored = 0;
+		nodesExplored = 1;
 		manhattanExistSet.put(board.getAll(), 1);
 		board.putCost(0);
 		manhattanFrontier.add(board);
-		nodesExplored++;
 		while ((manhattanFrontier.size() > 0) && (!manhattanFrontier.peek().getAll().equals(goal))) {
 			processManhattanChildren(manhattanFrontier.poll());
 		}
-		Board goalState = manhattanFrontier.poll();
+		goalState = manhattanFrontier.poll();
 		System.out.println("End Cost: " + goalState.getCost());
 		return nodesExplored;
 	}
@@ -54,6 +57,7 @@ public class Astar {
 			if (misplacedExistSet.get(testLeft.getAll()) == null) {
 				misplacedExistSet.put(testLeft.getAll(), 1);
 				testLeft.putCost(cost + 1);
+				testLeft.setParent(board);
 				misplacedFrontier.add(testLeft);
 				nodesExplored++;
 			}
@@ -62,6 +66,7 @@ public class Astar {
 			if (misplacedExistSet.get(testRight.getAll()) == null) {
 				misplacedExistSet.put(testRight.getAll(), 1);
 				testRight.putCost(cost + 1);
+				testRight.setParent(board);
 				misplacedFrontier.add(testRight);
 				nodesExplored++;
 			}
@@ -70,6 +75,7 @@ public class Astar {
 			if (misplacedExistSet.get(testUp.getAll()) == null) {
 				misplacedExistSet.put(testUp.getAll(), 1);
 				testUp.putCost(cost + 1);
+				testUp.setParent(board);
 				misplacedFrontier.add(testUp);
 				nodesExplored++;
 			}
@@ -78,6 +84,7 @@ public class Astar {
 			if (misplacedExistSet.get(testDown.getAll()) == null) {
 				misplacedExistSet.put(testDown.getAll(), 1);
 				testDown.putCost(cost + 1);
+				testDown.setParent(board);
 				misplacedFrontier.add(testDown);
 				nodesExplored++;
 			}
@@ -94,6 +101,7 @@ public class Astar {
 			if (manhattanExistSet.get(testLeft.getAll()) == null) {
 				manhattanExistSet.put(testLeft.getAll(), 1);
 				testLeft.putCost(cost + 1);
+				testLeft.setParent(board);
 				manhattanFrontier.add(testLeft);
 				nodesExplored++;
 			}
@@ -102,6 +110,7 @@ public class Astar {
 			if (manhattanExistSet.get(testRight.getAll()) == null) {
 				manhattanExistSet.put(testRight.getAll(), 1);
 				testRight.putCost(cost + 1);
+				testRight.setParent(board);
 				manhattanFrontier.add(testRight);
 				nodesExplored++;
 			}
@@ -110,6 +119,7 @@ public class Astar {
 			if (manhattanExistSet.get(testUp.getAll()) == null) {
 				manhattanExistSet.put(testUp.getAll(), 1);
 				testUp.putCost(cost + 1);
+				testUp.setParent(board);
 				manhattanFrontier.add(testUp);
 				nodesExplored++;
 			}
@@ -118,6 +128,7 @@ public class Astar {
 			if (manhattanExistSet.get(testDown.getAll()) == null) {
 				manhattanExistSet.put(testDown.getAll(), 1);
 				testDown.putCost(cost + 1);
+				testDown.setParent(board);
 				manhattanFrontier.add(testDown);
 				nodesExplored++;
 			}
