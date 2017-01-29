@@ -29,9 +29,13 @@ public class Generate {
 		for (int i = 0; i < array.length; i++) {
 			numarray[i] = Character.getNumericValue(array[i]);
 		}
-		if (numarray[0] > numarray[1]) count++;
-		if (numarray[0] > numarray[2]) count++;
-		if (numarray[1] > numarray[2]) count++;
+		if (numarray[1] != 0) {
+			if (numarray[0] > numarray[1]) count++;
+		}
+		if (numarray[2] != 0) {
+			if (numarray[0] > numarray[2]) count++;
+			if (numarray[1] > numarray[2]) count++;
+		}
 		return count;
 	}
 }

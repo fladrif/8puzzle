@@ -1,4 +1,5 @@
 public class Board {
+	private int pathCost;
 	private Node blank;
 	public Node topLeft = new Node();
 	public Node topMid = new Node();
@@ -11,6 +12,7 @@ public class Board {
 	public Node botRight = new Node();
 
 	public Board() {
+		pathCost = 0;
 		topLeft.initialize(0, null, null, topMid, midLeft);
 		topMid.initialize(1, null, topLeft, topRight, midMid);
 		topRight.initialize(2, null, topMid, null, midRight);
@@ -24,6 +26,7 @@ public class Board {
 	}
 
 	public Board(String initBoard) {
+		pathCost = 0;
 		char[] array = initBoard.toCharArray();
 		int[] intarray = new int[array.length];
 		int blankLocation = 0;
@@ -60,6 +63,14 @@ public class Board {
 			case 8: blank = botRight;
 							break;
 		}
+	}
+
+	public int getCost() {
+		return pathCost;
+	}
+	
+	public void putCost(int cost) {
+		pathCost = cost;
 	}
 
 	public String getFirst() {

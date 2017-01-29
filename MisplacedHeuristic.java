@@ -3,9 +3,9 @@ import java.util.Comparator;
 
 public class MisplacedHeuristic implements Comparator<Board> {
 	public int compare(Board x, Board y) {
-		if (misplacedTile(x) < misplacedTile(y)) {
+		if ((misplacedTile(x) + x.getCost()) < (misplacedTile(y) + y.getCost())) {
 			return -1;
-		} else if (misplacedTile(x) > misplacedTile(y)) {
+		} else if ((misplacedTile(x) + x.getCost()) > (misplacedTile(y) + y.getCost())) {
 			return 1;
 		} else {
 			return 0;

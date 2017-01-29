@@ -3,9 +3,9 @@ import java.util.Comparator;
 
 public class ManhattanHeuristic implements Comparator<Board> {
 	public int compare(Board x, Board y) {
-		if (manhattanDist(x) < manhattanDist(y)) {
+		if ((manhattanDist(x) + x.getCost()) < (manhattanDist(y) + y.getCost())) {
 			return -1;
-		} else if (manhattanDist(x) > manhattanDist(y)) {
+		} else if ((manhattanDist(x) + x.getCost()) > (manhattanDist(y) + y.getCost())) {
 			return 1;
 		} else {
 			return 0;
