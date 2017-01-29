@@ -6,7 +6,8 @@ public class MisplacedHeuristic implements Comparator<Board> {
 		if (misplacedTile(x) < misplacedTile(y)) {
 			return -1;
 		} else if (misplacedTile(x) > misplacedTile(y)) {
-			return 1; } else {
+			return 1;
+		} else {
 			return 0;
 		}
 	}

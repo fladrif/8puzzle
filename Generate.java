@@ -10,7 +10,6 @@ public class Generate {
 				board += num;
 			}
 		}
-		System.out.println(board);
 		return new Board(board);
 	}
 

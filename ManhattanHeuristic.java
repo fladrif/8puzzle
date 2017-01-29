@@ -2,7 +2,7 @@ import java.lang.Math;
 import java.util.Comparator;
 
 public class ManhattanHeuristic implements Comparator<Board> {
-	public int comare(Board x, Board y) {
+	public int compare(Board x, Board y) {
 		if (manhattanDist(x) < manhattanDist(y)) {
 			return -1;
 		} else if (manhattanDist(x) > manhattanDist(y)) {
