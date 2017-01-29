@@ -1,16 +1,19 @@
 import java.util.*;
 
 public class Astar {
-	private Hashtable<String, Integer> misplacedExistSet = new Hashtable<String, Integer>();
-	private Hashtable<String, Integer> manhattanExistSet = new Hashtable<String, Integer>();
-	private MisplacedHeuristic misplacedAlg = new MisplacedHeuristic();
-	private ManhattanHeuristic manhattanAlg = new ManhattanHeuristic();
-	private PriorityQueue<Board> misplacedFrontier = new PriorityQueue<Board>(20, misplacedAlg);
-	private PriorityQueue<Board> manhattanFrontier = new PriorityQueue<Board>(20, manhattanAlg);
+	private Hashtable<String, Integer> misplacedExistSet;
+	private Hashtable<String, Integer> manhattanExistSet;
+	private MisplacedHeuristic misplacedAlg;
+	private ManhattanHeuristic manhattanAlg;
+	private PriorityQueue<Board> misplacedFrontier;
+	private PriorityQueue<Board> manhattanFrontier;
 	private String goal = "012345678";
 	private int nodesExplored;
 
 	public int astarMisplaced(Board board) {
+		misplacedExistSet = new Hashtable<String, Integer>();
+		misplacedAlg = new MisplacedHeuristic();
+		misplacedFrontier = new PriorityQueue<Board>(20, misplacedAlg);
 		nodesExplored = 0;
 		misplacedExistSet.put(board.getAll(), 1);
 		board.putCost(0);
@@ -25,6 +28,9 @@ public class Astar {
 	}
 
 	public int astarManhattan(Board board) {
+		manhattanExistSet = new Hashtable<String, Integer>();
+		manhattanAlg = new ManhattanHeuristic();
+		manhattanFrontier = new PriorityQueue<Board>(20, manhattanAlg);
 		nodesExplored = 0;
 		manhattanExistSet.put(board.getAll(), 1);
 		board.putCost(0);
