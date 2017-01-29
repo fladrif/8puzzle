@@ -8,32 +8,77 @@ public class Astar {
 	private PriorityQueue<Board> misplacedFrontier = new PriorityQueue<Board>(20, misplacedAlg);
 	private PriorityQueue<Board> manhattanFrontier = new PriorityQueue<Board>(20, manhattanAlg);
 	private String goal = "012345678";
-	private int nodesExplored = 0;
-	public Astar(Board board) throws InterruptedException{
-		Board intState;
+	private int nodesExplored;
+
+	public int astarMisplaced(Board board) {
+		nodesExplored = 0;
+		misplacedExistSet.put(board.getAll(), 1);
+		board.putCost(0);
+		misplacedFrontier.add(board);
+		nodesExplored++;
+		while ((misplacedFrontier.size() > 0) && (!misplacedFrontier.peek().getAll().equals(goal))) {
+			processMisplacedChildren(misplacedFrontier.poll());
+		}
+		Board goalState = misplacedFrontier.poll();
+		System.out.println("End Cost: " + goalState.getCost());
+		return nodesExplored;
+	}
+
+	public int astarManhattan(Board board) {
+		nodesExplored = 0;
 		manhattanExistSet.put(board.getAll(), 1);
 		board.putCost(0);
 		manhattanFrontier.add(board);
 		nodesExplored++;
 		while ((manhattanFrontier.size() > 0) && (!manhattanFrontier.peek().getAll().equals(goal))) {
-			// Thread.sleep(1000);
-			// intState = manhattanFrontier.peek();
-			// System.out.println("Cost: " + intState.getCost());
-			// System.out.println("Heuristic: " + manhattanAlg.manhattanDist(intState));
-			// System.out.println(intState.getFirst());
-			// System.out.println(intState.getSecond());
-			// System.out.println(intState.getThird());
-			processChildren(manhattanFrontier.poll());
+			processManhattanChildren(manhattanFrontier.poll());
 		}
 		Board goalState = manhattanFrontier.poll();
 		System.out.println("End Cost: " + goalState.getCost());
-		System.out.println("Nodes Expored: " + nodesExplored);
-		System.out.println(goalState.getFirst());
-		System.out.println(goalState.getSecond());
-		System.out.println(goalState.getThird());
+		return nodesExplored;
 	}
 
-	private void processChildren(Board board) {
+	private void processMisplacedChildren(Board board) {
+		int cost = board.getCost();
+		Board testLeft = testMove(board, "left");
+		Board testRight = testMove(board, "right");
+		Board testUp = testMove(board, "up");
+		Board testDown = testMove(board, "down");
+		if (testLeft != null) {
+			if (misplacedExistSet.get(testLeft.getAll()) == null) {
+				misplacedExistSet.put(testLeft.getAll(), 1);
+				testLeft.putCost(cost + 1);
+				misplacedFrontier.add(testLeft);
+				nodesExplored++;
+			}
+		}
+		if (testRight != null) {
+			if (misplacedExistSet.get(testRight.getAll()) == null) {
+				misplacedExistSet.put(testRight.getAll(), 1);
+				testRight.putCost(cost + 1);
+				misplacedFrontier.add(testRight);
+				nodesExplored++;
+			}
+		}
+		if (testUp != null) {
+			if (misplacedExistSet.get(testUp.getAll()) == null) {
+				misplacedExistSet.put(testUp.getAll(), 1);
+				testUp.putCost(cost + 1);
+				misplacedFrontier.add(testUp);
+				nodesExplored++;
+			}
+		}
+		if (testDown != null) {
+			if (misplacedExistSet.get(testDown.getAll()) == null) {
+				misplacedExistSet.put(testDown.getAll(), 1);
+				testDown.putCost(cost + 1);
+				misplacedFrontier.add(testDown);
+				nodesExplored++;
+			}
+		}
+	}
+
+	private void processManhattanChildren(Board board) {
 		int cost = board.getCost();
 		Board testLeft = testMove(board, "left");
 		Board testRight = testMove(board, "right");
