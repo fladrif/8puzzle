@@ -8,23 +8,26 @@ public class Astar {
 	private PriorityQueue<Board> misplacedFrontier = new PriorityQueue<Board>(20, misplacedAlg);
 	private PriorityQueue<Board> manhattanFrontier = new PriorityQueue<Board>(20, manhattanAlg);
 	private String goal = "012345678";
+	private int nodesExplored = 0;
 	public Astar(Board board) throws InterruptedException{
 		Board intState;
 		manhattanExistSet.put(board.getAll(), 1);
 		board.putCost(0);
 		manhattanFrontier.add(board);
+		nodesExplored++;
 		while ((manhattanFrontier.size() > 0) && (!manhattanFrontier.peek().getAll().equals(goal))) {
-			Thread.sleep(1000);
-			intState = manhattanFrontier.peek();
-			System.out.println("Cost: " + intState.getCost());
-			System.out.println("Heuristic: " + manhattanAlg.manhattanDist(intState));
-			System.out.println(intState.getFirst());
-			System.out.println(intState.getSecond());
-			System.out.println(intState.getThird());
+			// Thread.sleep(1000);
+			// intState = manhattanFrontier.peek();
+			// System.out.println("Cost: " + intState.getCost());
+			// System.out.println("Heuristic: " + manhattanAlg.manhattanDist(intState));
+			// System.out.println(intState.getFirst());
+			// System.out.println(intState.getSecond());
+			// System.out.println(intState.getThird());
 			processChildren(manhattanFrontier.poll());
 		}
 		Board goalState = manhattanFrontier.poll();
 		System.out.println("End Cost: " + goalState.getCost());
+		System.out.println("Nodes Expored: " + nodesExplored);
 		System.out.println(goalState.getFirst());
 		System.out.println(goalState.getSecond());
 		System.out.println(goalState.getThird());
@@ -41,6 +44,7 @@ public class Astar {
 				manhattanExistSet.put(testLeft.getAll(), 1);
 				testLeft.putCost(cost + 1);
 				manhattanFrontier.add(testLeft);
+				nodesExplored++;
 			}
 		}
 		if (testRight != null) {
@@ -48,6 +52,7 @@ public class Astar {
 				manhattanExistSet.put(testRight.getAll(), 1);
 				testRight.putCost(cost + 1);
 				manhattanFrontier.add(testRight);
+				nodesExplored++;
 			}
 		}
 		if (testUp != null) {
@@ -55,6 +60,7 @@ public class Astar {
 				manhattanExistSet.put(testUp.getAll(), 1);
 				testUp.putCost(cost + 1);
 				manhattanFrontier.add(testUp);
+				nodesExplored++;
 			}
 		}
 		if (testDown != null) {
@@ -62,6 +68,7 @@ public class Astar {
 				manhattanExistSet.put(testDown.getAll(), 1);
 				testDown.putCost(cost + 1);
 				manhattanFrontier.add(testDown);
+				nodesExplored++;
 			}
 		}
 	}

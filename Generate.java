@@ -15,27 +15,19 @@ public class Generate {
 
 	public boolean validateBoard(Board board) {
 		int count = 0;
-		count += numOfSwap(board.getFirst());
-		count += numOfSwap(board.getSecond());
-		count += numOfSwap(board.getThird());
+		char[] boardArray = board.getAll().toCharArray();
+		int[] boardToInt = new int[9];
+		for (int i = 0; i < boardArray.length; i++) {
+			boardToInt[i] = Character.getNumericValue(boardArray[i]);
+		}
+		for (int i = 0; i < boardToInt.length; i++) {
+			for (int j = i + 1; j < boardToInt.length; j++) {
+				if (boardToInt[j] != 0) {
+					if (boardToInt[i] > boardToInt[j]) count++;
+				}
+			}
+		}
 		if (count % 2 == 0) return true;
 		else return false;
-	}
-
-	public int numOfSwap(String line) {
-		char[] array = line.toCharArray();
-		int[] numarray = new int[3];
-		int count = 0;
-		for (int i = 0; i < array.length; i++) {
-			numarray[i] = Character.getNumericValue(array[i]);
-		}
-		if (numarray[1] != 0) {
-			if (numarray[0] > numarray[1]) count++;
-		}
-		if (numarray[2] != 0) {
-			if (numarray[0] > numarray[2]) count++;
-			if (numarray[1] > numarray[2]) count++;
-		}
-		return count;
 	}
 }
