@@ -98,6 +98,6 @@ class TestStructure {
 	}
 
 	public int getTimeTaken() {
-		return (int) timeTaken/ 1000000;
+		return (int) timeTaken/ 1000;
 	}
 }
